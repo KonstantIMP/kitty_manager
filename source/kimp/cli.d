@@ -44,5 +44,10 @@ class Cli {
     public static void printVersion() @safe {
         writeln(PACKAGE_NAME, " : ", MAJOR_VERSION, '.', MINOR_VERSION, '.', BUILD_VERSION);
     }
+
+
+    public static void printError(immutable string error_msg) @safe {
+        writeln("\x1b[1;31mError : \x1b[0m", error_msg);
+    }
 }
 

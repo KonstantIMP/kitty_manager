@@ -1,7 +1,7 @@
 // Import kimp modules
 import kimp.database, kimp.cli;
-// Import getopt module
-import std.getopt;
+// Import getopt, exception and file modules
+import std.getopt, std.file, std.exception;
 
 /**
  * The app start point
@@ -23,6 +23,8 @@ int main(string [] args) {
 	getopt(args, "h|help", &h, "v|version", &v, "b|backup", &b,
 		"c|clear", &c, "u|user", &u, "p|passwd", &p, "d|database", &d);
 
+	// Check Database
+	if (d == "") d = "kitty.db";
 	// Check help
 	if (h) {
 		Cli.printHelp();
@@ -32,6 +34,17 @@ int main(string [] args) {
 	if (v) {
 		Cli.printVersion();
 		return 0;
+	}
+	// Checl clear
+	if (c) {
+		if (exists(d) == true && isFile(d) == true) {
+			remove(d);
+			return 0;
+		}
+		else {
+			Cli.printError("Cannot clear the database.");
+			return -1;
+		}
 	}
 
 	return 0;
