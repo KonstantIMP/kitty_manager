@@ -28,14 +28,21 @@ class Cli {
     public static void printHelp() @safe {
         writeln("USAGE : kitty_m [OPTIONS]");
         writeln("OPTIONS :");
-        writeln("  -h|--help\t\t\t\t\tPrint this message and exit");
-        writeln("  -v|--varsion\t\t\t\tPrint KittyManager version and exit");
+        writeln("  -h|--help\t\t\tPrint this message and exit");
+        writeln("  -v|--version\t\t\tPrint KittyManager version and exit");
         writeln("  -u|--user [USERNAME]\t\tLogin for data getting");
         writeln("  -p|--passwd [PASSWORD]\tPassword for -u flag");
         writeln("  -b|--backup [FILENAME]\tBackup local database to FILENAME");
-        writeln("  -c|--clear\t\t\t\tClear the local database");
+        writeln("  -c|--clear\t\t\tClear the local database");
         writeln("  -d|--database [FILENAME]\tLoad data from FILENAME");
         writeln("");
+    }
+
+    /**
+     * Print current app's version
+     */
+    public static void printVersion() @safe {
+        writeln(PACKAGE_NAME, " : ", MAJOR_VERSION, '.', MINOR_VERSION, '.', BUILD_VERSION);
     }
 }
 

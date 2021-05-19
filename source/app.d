@@ -1,5 +1,7 @@
 // Import kimp modules
 import kimp.database, kimp.cli;
+// Import getopt module
+import std.getopt;
 
 /**
  * The app start point
@@ -12,10 +14,25 @@ import kimp.database, kimp.cli;
 int main(string [] args) {
 	// Hello user
 	Cli.printHello();
-	Cli.printHelp();
 
-	// Create database
-	//auto d = new DatabaseHelper();
+	// Variables for getopt
+	bool h = false, v = false, c = false;
+	string u = "", p = "", b = "", d = "";
+
+	// Get CL options
+	getopt(args, "h|help", &h, "v|version", &v, "b|backup", &b,
+		"c|clear", &c, "u|user", &u, "p|passwd", &p, "d|database", &d);
+
+	// Check help
+	if (h) {
+		Cli.printHelp();
+		return 0;
+	}
+	// Check version
+	if (v) {
+		Cli.printVersion();
+		return 0;
+	}
 
 	return 0;
 }
