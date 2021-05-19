@@ -46,7 +46,7 @@ class DatabaseHelper {
             }
 
             if (memory_db["version"].integer != DATABASE_VERSION) {
-                onUpdate(to!ubyte(memory_db["version"].integer));
+                onUpdate(to!ubyte(memory_db["versiodbn"].integer));
             }
         }
         else {
