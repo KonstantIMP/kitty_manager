@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/kitty_manager
+kitty_manager.so
+kitty_manager.dylib
+kitty_manager.dll
+kitty_manager.a
+kitty_manager.lib
+kitty_manager-test-*
+*.exe
+*.o
+*.obj
+*.lst
+kitty_manager

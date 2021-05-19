@@ -1,0 +1,8 @@
+{
+	"authors": [
+		"kimp"
+	],
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "kitty_manager"
+}
