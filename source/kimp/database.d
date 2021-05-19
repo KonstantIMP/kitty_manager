@@ -73,6 +73,15 @@ class DatabaseHelper {
         // Hothing here
     }
 
+    /**
+     * Get Users num from memory db
+     * Returns:
+     *     Users num in the database
+     */
+    public ulong getUsersNum() @trusted {
+        return memory_db["users"].array().length;
+    }
+
     /// Database's file name
     private immutable string db;
     /// Memory database

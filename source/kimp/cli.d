@@ -19,6 +19,23 @@ class Cli {
         writeln("| . \\| | |_| |_| |_| | |  | |_\t\tPowered by KonstantIMP");
         writeln("|_|\\_|_|\\__|\\__|\\__, |_|  |_(_)\t\tFeedback email : mihedovkos@gmail.com");
         writeln("                |___/");
+        writeln("");
+    }
+
+    /**
+     * Print help message with cli options
+     */
+    public static void printHelp() @safe {
+        writeln("USAGE : kitty_m [OPTIONS]");
+        writeln("OPTIONS :");
+        writeln("  -h|--help\t\t\t\t\tPrint this message and exit");
+        writeln("  -v|--varsion\t\t\t\tPrint KittyManager version and exit");
+        writeln("  -u|--user [USERNAME]\t\tLogin for data getting");
+        writeln("  -p|--passwd [PASSWORD]\tPassword for -u flag");
+        writeln("  -b|--backup [FILENAME]\tBackup local database to FILENAME");
+        writeln("  -c|--clear\t\t\t\tClear the local database");
+        writeln("  -d|--database [FILENAME]\tLoad data from FILENAME");
+        writeln("");
     }
 }
 

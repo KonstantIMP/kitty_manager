@@ -12,6 +12,7 @@ import kimp.database, kimp.cli;
 int main(string [] args) {
 	// Hello user
 	Cli.printHello();
+	Cli.printHelp();
 
 	// Create database
 	//auto d = new DatabaseHelper();
