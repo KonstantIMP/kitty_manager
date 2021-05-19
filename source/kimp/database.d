@@ -16,6 +16,8 @@ class DatabaseException : Exception {
      * Default constructor for DatabaseException
      * Params:
      *     msg = Excpetion's message (With error)
+     *     file = Exception file
+     *     line = Exception line
      */
     this(string msg, string file = __FILE__, size_t line = __LINE__) @safe {
         super(msg, file, line); // Just call parent's constructor
@@ -72,7 +74,7 @@ class DatabaseHelper {
     }
 
     /// Database's file name
-    immutable string db;
+    private immutable string db;
     /// Memory database
-    JSONValue memory_db;
+    private JSONValue memory_db;
 }

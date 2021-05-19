@@ -2,7 +2,7 @@
 module kimp.defines;
 
 /// The application's name
-immutable string PACKAGE_NAME = "KittyPassword";
+immutable string PACKAGE_NAME = "KittyManager";
 
 /// Current MAJOR version
 immutable ulong MAJOR_VERSION = 0;

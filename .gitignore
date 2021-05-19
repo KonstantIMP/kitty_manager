@@ -15,3 +15,5 @@ kitty_manager-test-*
 *.lst
 kitty_manager
 kitty.db
+out/
+docs/
