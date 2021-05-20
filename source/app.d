@@ -5,12 +5,16 @@ import std.getopt, std.file, std.exception;
 
 /**
  * The app start point
+ *
  * Print messages, get data and tell with user
  * Params:
  *     args = Command line arguments (Read more "kitty_m -h")
  * Returns:
  *     0 if everything is OK
- * Todos:
+ * Todo:
+ *     Write return values
+ *
+ *     Add getopt exceptions catching
  */
 int main(string [] args) {
 	// Hello user

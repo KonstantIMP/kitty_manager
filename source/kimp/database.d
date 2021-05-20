@@ -4,6 +4,9 @@ module kimp.database;
 // Import exceptions, files and JSON
 import std.exception, std.json, std.file, std.conv;
 
+// Import kimp modules
+import kimp.cli;
+
 /// Contain current database's version
 immutable ubyte DATABASE_VERSION = 0;
 
@@ -33,9 +36,11 @@ class DatabaseException : Exception {
 class DatabaseHelper {
     /**
      * Init Helper's data and database
+     *
      * Check for the existence of the database and create it if the file is not found
      * Throws:
      *     DatabaseException if the database is invalid
+     *
      *     ErrnoException if the database cannot be created or opened
      */
     public this(immutable string db_file = "kitty.db") @safe {
@@ -70,7 +75,7 @@ class DatabaseHelper {
      *     DatabaseException if cannot update database
      */
     private void onUpdate(immutable ubyte last_version) @safe {
-        // Hothing here
+        Cli.printWarning("Migrate database from " ~ to!string(last_version) ~ " to " ~ to!string(DATABASE_VERSION));
     }
 
     /**
@@ -88,6 +93,7 @@ class DatabaseHelper {
      *     backup_file = Path for backup file
      * Throws:
      *     ErrnoException if cannot create backup file
+     *
      *     DatabaseException if backup already exist
      */
     public void backup(immutable string backup_file) @safe {

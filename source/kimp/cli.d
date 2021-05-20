@@ -55,5 +55,12 @@ class Cli {
     public static void printError(immutable string error_msg) @safe {
         writeln("\x1b[1;31mError : \x1b[0m", error_msg);
     }
+
+    /**
+     * Print warning message (With yellow indicator)
+     * Params:
+     *     warning = Warning message for displaing
+     */
+    public static void printWarning(immutable string warning) @safe { writeln("\x1b[1;33mWarning : \x1b[0m", warning); }
 }
 
