@@ -4,6 +4,9 @@ module kimp.database;
 // Import exceptions, files and JSON
 import std.exception, std.json, std.file, std.conv;
 
+// Import crypting libraries
+import std.digest.sha, std.algorithm;
+
 // Import kimp modules
 import kimp.cli;
 
@@ -97,9 +100,7 @@ class DatabaseHelper {
      *     DatabaseException if backup already exist
      */
     public void backup(immutable string backup_file) @safe {
-        if (exists(backup_file) == true) {
-            throw new DatabaseException("File with name \"" ~ backup_file ~ "\" already exist");
-        }
+        enforce!DatabaseException(exists(backup_file) == false, "File with name \"" ~ backup_file ~ "\" already exist");
         write(backup_file, memory_db.toString());
     }
 
@@ -115,6 +116,52 @@ class DatabaseHelper {
             if (i["name"].str() == username) return true;
         }
         return false;
+    }
+
+    /**
+     * Create new User recod in database
+     * Params:
+     *     username = Name for new user
+     *     password = Password for new user
+     * Throws:
+     *     DatabaseExcpetion if the user already exists
+     *     FileException if cannot write db
+     */
+    public void addUser(immutable string username, immutable string password) @trusted {
+        enforce!DatabaseException(this.checkUser(username) == false, "The user already exists");
+        auto user_record = JSONValue(["name" : username, "password" : sha256Of(password).toHexString()]);
+        user_record["saves"] = parseJSON("[]"); memory_db["users"].array() ~= user_record;
+        this.writeDB();
+    }
+
+    /**
+     * Remove user from the database
+     * Params:
+     *     username = Name of user for delete
+     *     password = Password for the confirmation
+     * Throws:
+     *     DatabaseException if the user doesn't exist or password is incorrect
+     *     FileException if cannot write db
+     */
+    public void removeUser(immutable string username, immutable string password) @trusted {
+        enforce!DatabaseException(this.checkUser(username), "The user doesn\'t exist");
+        JSONValue tmp_users = parseJSON("[]");
+        foreach(i, e; memory_db["users"].array()) {
+            if (e["name"].str() == username) {
+                enforce!DatabaseException(sha256Of(password).toHexString() == e["password"].str(), "Incorrect password");
+            }
+            else tmp_users.array() ~= e;
+        }
+        memory_db["users"] = tmp_users; this.writeDB();
+    }
+
+    /**
+     * Write the current database to the file
+     * Throws:
+     *     FileException if cannot write db
+     */
+    private void writeDB() @safe {
+        write(db, memory_db.toString());
     }
 
     /// Database's file name

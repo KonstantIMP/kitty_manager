@@ -67,5 +67,9 @@ int main(string [] args) {
 		return -2;
 	}
 
+	//kitty_db.addUser("Kimparik", "ZZZebra30z");
+	//kitty_db.addUser("Kimp", "Zebra30z");
+	kitty_db.removeUser("Kimp", "Zebra30z");
+
 	return 0;
 }
