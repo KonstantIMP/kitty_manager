@@ -40,7 +40,7 @@ int main(string [] args) {
 		Cli.printVersion();
 		return 0;
 	}
-	// Checl clear
+	// Check clear
 	if (c) {
 		try {
 			if (exists(d) == true && isFile(d) == true) {
@@ -61,15 +61,49 @@ int main(string [] args) {
 		try {
 			kitty_db.backup(b);
 			return 0;
-		} finally {
+		} catch (Exception e) {
 			Cli.printError("Cannot backup the database");
+			Cli.printError(e.msg);
+			return -2;
 		}
-		return -2;
 	}
 
-	//kitty_db.addUser("Kimparik", "ZZZebra30z");
-	//kitty_db.addUser("Kimp", "Zebra30z");
-	kitty_db.removeUser("Kimp", "Zebra30z");
+	//Check remove
+	if (r) {
+		if (p == "" || u == "") {
+			Cli.printError("Password or username is empty");
+			return -3;
+		}
+		try {
+			kitty_db.removeUser(u, p);
+			return 0;
+		} catch (Exception e) {
+			Cli.printError("Cannot remove user");
+			Cli.printError(e.msg);
+			return -4;
+		}
+	}
+
+	// Check add
+	if (a) {
+		if (p == "" || u == "") {
+			Cli.printError("Password or username is empty");
+			return -3;
+		}
+		try {
+			kitty_db.addUser(u, p);
+			return 0;
+		} catch (Exception e) {
+			Cli.printError("Cannot add new user");
+			Cli.printError(e.msg);
+			return -5;
+		}
+	}
+
+	if (kitty_db.getUsersNum() == 0) {
+		Cli.printWarning("There aren\'t any users. See kitty_m -h for getting help");
+		return 0;
+	}
 
 	return 0;
 }

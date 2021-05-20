@@ -30,8 +30,8 @@ class Cli {
         writeln("OPTIONS :");
         writeln("  -h|--help\t\t\tPrint this message and exit");
         writeln("  -v|--version\t\t\tPrint KittyManager version and exit");
-        writeln("  -a|--add\t\tCreate new user (Just with -u and -p)");
-        writeln("  -r|--remove\t\tRemove user (Just with -u and -p)");
+        writeln("  -a|--add\t\t\tCreate new user (Just with -u and -p)");
+        writeln("  -r|--remove\t\t\tRemove user (Just with -u and -p)");
         writeln("  -u|--user [USERNAME]\t\tLogin for data getting");
         writeln("  -p|--passwd [PASSWORD]\tPassword for -u flag");
         writeln("  -b|--backup [FILENAME]\tBackup local database to FILENAME");
