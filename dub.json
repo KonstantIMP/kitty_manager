@@ -4,5 +4,11 @@
 	],
 	"description": "A minimal D application.",
 	"license": "proprietary",
-	"name": "kitty_manager"
+	"name": "kitty_manager",
+	"dflags" : [
+		"-Ddout"
+	],
+	"buildRequirements" : [
+		"allowWarnings"
+	]
 }

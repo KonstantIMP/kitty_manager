@@ -48,7 +48,7 @@ class DatabaseHelper {
             }
 
             if (memory_db["version"].integer != DATABASE_VERSION) {
-                onUpdate(to!ubyte(memory_db["versiodbn"].integer));
+                onUpdate(to!ubyte(memory_db["version"].integer));
             }
         }
         else {
@@ -91,8 +91,24 @@ class DatabaseHelper {
      *     DatabaseException if backup already exist
      */
     public void backup(immutable string backup_file) @safe {
-        if (exists(backup_file) == true) throw new DatabaseException("File with name \"" ~ backup_file ~ "\" already exist");
+        if (exists(backup_file) == true) {
+            throw new DatabaseException("File with name \"" ~ backup_file ~ "\" already exist");
+        }
         write(backup_file, memory_db.toString());
+    }
+
+    /**
+     * Check user existion in the database
+     * Params:
+     *     username = Username for checking
+     * Returns:
+     *     true if the user exists
+     */
+    public bool checkUser(immutable string username) @trusted {
+        foreach (i; memory_db["users"].array()) {
+            if (i["name"].str() == username) return true;
+        }
+        return false;
     }
 
     /// Database's file name

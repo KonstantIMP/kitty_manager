@@ -10,18 +10,19 @@ import std.getopt, std.file, std.exception;
  *     args = Command line arguments (Read more "kitty_m -h")
  * Returns:
  *     0 if everything is OK
+ * Todos:
  */
 int main(string [] args) {
 	// Hello user
 	Cli.printHello();
 
 	// Variables for getopt
-	bool h = false, v = false, c = false;
+	bool h = false, v = false, c = false, a = false, r = false;
 	string u = "", p = "", b = "", d = "";
 
 	// Get CL options
-	getopt(args, "h|help", &h, "v|version", &v, "b|backup", &b,
-		"c|clear", &c, "u|user", &u, "p|passwd", &p, "d|database", &d);
+	getopt(args, "h|help", &h, "v|version", &v, "b|backup", &b, "a|add", &a,
+		"c|clear", &c, "u|user", &u, "p|passwd", &p, "d|database", &d, "r|remove", &r);
 
 	// Check Database
 	if (d == "") d = "kitty.db";

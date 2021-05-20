@@ -30,6 +30,8 @@ class Cli {
         writeln("OPTIONS :");
         writeln("  -h|--help\t\t\tPrint this message and exit");
         writeln("  -v|--version\t\t\tPrint KittyManager version and exit");
+        writeln("  -a|--add\t\tCreate new user (Just with -u and -p)");
+        writeln("  -r|--remove\t\tRemove user (Just with -u and -p)");
         writeln("  -u|--user [USERNAME]\t\tLogin for data getting");
         writeln("  -p|--passwd [PASSWORD]\tPassword for -u flag");
         writeln("  -b|--backup [FILENAME]\tBackup local database to FILENAME");
@@ -45,7 +47,11 @@ class Cli {
         writeln(PACKAGE_NAME, " : ", MAJOR_VERSION, '.', MINOR_VERSION, '.', BUILD_VERSION);
     }
 
-
+    /**
+     * Print error message (With red indicator)
+     * Params:
+     *     error_msg = Error message for displaing
+     */
     public static void printError(immutable string error_msg) @safe {
         writeln("\x1b[1;31mError : \x1b[0m", error_msg);
     }
