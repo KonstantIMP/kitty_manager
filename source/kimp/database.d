@@ -82,6 +82,19 @@ class DatabaseHelper {
         return memory_db["users"].array().length;
     }
 
+    /**
+     * Backup the database
+     * Params:
+     *     backup_file = Path for backup file
+     * Throws:
+     *     ErrnoException if cannot create backup file
+     *     DatabaseException if backup already exist
+     */
+    public void backup(immutable string backup_file) @safe {
+        if (exists(backup_file) == true) throw new DatabaseException("File with name \"" ~ backup_file ~ "\" already exist");
+        write(backup_file, memory_db.toString());
+    }
+
     /// Database's file name
     private immutable string db;
     /// Memory database

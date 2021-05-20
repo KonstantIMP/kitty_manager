@@ -37,14 +37,29 @@ int main(string [] args) {
 	}
 	// Checl clear
 	if (c) {
-		if (exists(d) == true && isFile(d) == true) {
-			remove(d);
-			return 0;
-		}
-		else {
+		try {
+			if (exists(d) == true && isFile(d) == true) {
+				remove(d);
+				return 0;
+			}
+		} finally {
 			Cli.printError("Cannot clear the database.");
-			return -1;
 		}
+		return -1;
+	}
+
+	// Create Database object
+	auto kitty_db = new DatabaseHelper(d);
+
+	// Backup check
+	if (b != "") {
+		try {
+			kitty_db.backup(b);
+			return 0;
+		} finally {
+			Cli.printError("Cannot backup the database");
+		}
+		return -2;
 	}
 
 	return 0;
