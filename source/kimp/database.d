@@ -32,6 +32,18 @@ class DatabaseException : Exception {
 
 /**
  * Helper class for working with local passwords database
+ *
+ * Database structure :
+ * - file.db
+ *   - version
+ *   - users
+ *     - name
+ *     - password
+ *     - saves
+ *       - website
+ *       - login
+ *       - password
+ *
  * Authors: KonstantIMP, mihedovkos@gmail.com
  * Date: May 19, 2021
  * See_Also: DatabaseException

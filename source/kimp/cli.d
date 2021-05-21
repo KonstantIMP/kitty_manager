@@ -41,6 +41,16 @@ class Cli {
     }
 
     /**
+     * Print message with cat and information about saved password
+     */
+    public static void printSave(immutable string website, immutable string login, immutable string password) @safe {
+        writeln("\x1b[1m    ^~^  ,   Website : \x1b[0m", website);
+        writeln("\x1b[1m   ('Y') )   \x1b[0m");
+        writeln("\x1b[1m   /   \\/    Login : \x1b[0m", login);
+        writeln("\x1b[1m  (\\|||/)    Password : \x1b[0m", password);
+    }
+
+    /**
      * Print current app's version
      */
     public static void printVersion() @safe {
