@@ -2,7 +2,7 @@
 module kimp.cli;
 
 // Import stdio and defines
-import std.stdio, kimp.defines;;
+import std.stdio, kimp.defines;
 
 /**
  * Class for work with CLI
@@ -62,5 +62,12 @@ class Cli {
      *     warning = Warning message for displaing
      */
     public static void printWarning(immutable string warning) @safe { writeln("\x1b[1;33mWarning : \x1b[0m", warning); }
+
+    /**
+     * Print message (With green indicator)
+     * Params:
+     *     message = Message for displaing
+     */
+    public static void printMessage(immutable string message) @safe { writeln("\x1b[1;32mMessage : \x1b[0m", message); }
 }
 
