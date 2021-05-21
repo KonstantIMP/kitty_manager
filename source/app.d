@@ -45,6 +45,7 @@ int main(string [] args) {
 		try {
 			if (exists(d) == true && isFile(d) == true) {
 				remove(d);
+				Cli.printMessage("The database was cleared");
 				return 0;
 			}
 		} finally {
@@ -76,6 +77,7 @@ int main(string [] args) {
 		}
 		try {
 			kitty_db.removeUser(u, p);
+			Cli.printMessage("The user was removed");
 			return 0;
 		} catch (Exception e) {
 			Cli.printError("Cannot remove user");
@@ -92,6 +94,7 @@ int main(string [] args) {
 		}
 		try {
 			kitty_db.addUser(u, p);
+			Cli.printMessage("The user was created");
 			return 0;
 		} catch (Exception e) {
 			Cli.printError("Cannot add new user");
