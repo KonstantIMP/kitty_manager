@@ -34,12 +34,29 @@ class Cryptor {
      */
     public static string xorCrypt(immutable string msg, immutable string key) @safe {
         enforce!CryptException(key.length != 0, "Key is wrong (length mustn\'t be 0)");
-        string result = "";
+        string result = "";// result.length = msg.length;
 
         for (ulong i = 0; i < msg.length; i++) {
-            result ~= to!string(msg[i] ^ key[i % key.length]);
+            result ~= to!ubyte(msg[i]) ^ to!ubyte(key[i % key.length]);
         }
 
         return result;
     }
+
+    /// Unit tests for xorCrypt
+    @safe unittest {
+        assert(xorCrypt("abcd", "abcd") == "\0\0\0\0");
+        assert(xorCrypt("Hello", "w") == [0x3f, 0x12, 0x1b, 0x1b, 0x18]);
+        assert(xorCrypt(xorCrypt("Message", "key"), "key") == to!string("Message"));
+    }
+
+    /**
+     * Decrypt message by XOR letters from message and letters from key
+     * Params:
+     *     msg = Message for decrypting
+     *     key = Key for decrypting
+     * Throws:
+     *     CryptException if key is wrong
+     */
+    alias xorDecrypt=xorCrypt;
 }
