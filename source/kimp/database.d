@@ -156,6 +156,25 @@ class DatabaseHelper {
     }
 
     /**
+     * Try to auth the user and check its password
+     * Params:
+     *     username = Name for authentication
+     *     password = Password for getting access
+     * Throws:
+     *     DatabaseException is password is incorrect or user doesn't exist
+     * Returns:
+     *     true if authentification is complete
+     */
+    public void authenticate(immutable string username, immutable string password) @trusted {
+        enforce!DatabaseException(this.checkUser(username), "The user doesn\'t exist");
+        foreach (e; memory_db["users"].array()) {
+            if(e["name"].str() == username) {
+                enforce!DatabaseException(sha256Of(password).toHexString() == e["password"].str(), "Incorrect password");
+            }
+        }
+    }
+
+    /**
      * Write the current database to the file
      * Throws:
      *     FileException if cannot write db

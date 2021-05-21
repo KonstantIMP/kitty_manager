@@ -103,9 +103,22 @@ int main(string [] args) {
 		}
 	}
 
+	// Check users num
 	if (kitty_db.getUsersNum() == 0) {
 		Cli.printWarning("There aren\'t any users. See kitty_m -h for getting help");
 		return 0;
+	}
+
+	// Check login and password
+	if (u != "" && p != "") {
+		try {
+			kitty_db.authenticate(u, p);
+		} catch (Exception e) {
+			Cli.printError("Cannot authentificate the user");
+			Cli.printError(e.msg);
+			return -6;
+		}
+		Cli.printMessage("Access was granted!");
 	}
 
 	return 0;
