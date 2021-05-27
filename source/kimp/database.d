@@ -168,6 +168,32 @@ class DatabaseHelper {
     }
 
     /**
+     * Collect saved websites
+     * Params:
+     *     username = Name for authentication
+     *     password = Password for authentication
+     * Throws:
+     *     DatabaseException if cannot auth the user
+     * Returns:
+     *     String array with website's names
+     */
+    public string [] getWebsites(immutable string username, immutable string password) @trusted {
+        string [] websites; websites.length = 0;
+        this.authenticate(username, password);
+
+        foreach(u; memory_db["users"].array()) {
+            if (u["name"].str() == username) {
+                foreach(e; u["saves"].array()) {
+                    websites.length = websites.length + 1;
+                    websites[$ - 1] = e["website"].str();
+                } break;
+            }
+        }
+
+        return websites;
+    }
+
+    /**
      * Try to auth the user and check its password
      * Params:
      *     username = Name for authentication

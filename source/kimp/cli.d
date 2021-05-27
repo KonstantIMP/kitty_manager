@@ -2,7 +2,7 @@
 module kimp.cli;
 
 // Import stdio and defines
-import std.stdio, kimp.defines;
+import std.stdio, core.stdc.stdio, std.conv, kimp.defines;
 
 /**
  * Class for work with CLI
