@@ -8,7 +8,7 @@ import std.exception, std.json, std.file, std.conv;
 import std.digest.sha, std.algorithm;
 
 // Import kimp modules
-import kimp.cli;
+import kimp.cli, kimp.cryptor;
 
 /// Contain current database's version
 immutable ubyte DATABASE_VERSION = 0;
@@ -165,6 +165,35 @@ class DatabaseHelper {
             else tmp_users.array() ~= e;
         }
         memory_db["users"] = tmp_users; this.writeDB();
+    }
+
+    /**
+     * Add new website to the user's account
+     * Params:
+     *     username = Name for authentication
+     *     password = Password for authentication
+     *     website = Array with the website's data(name, login, password)
+     * Throws:
+     *     DatabaseException if cannot auth the user o rif the data is incorrect
+     *     FileException if cannot write the database
+     */
+    public void addWebsite(immutable string username, immutable string password, immutable string [] website) @trusted {
+        enforce!DatabaseException(website.length == 3, "Incorrect input data");
+        this.authenticate(username, password);
+
+        auto website_record = parseJSON("{}");
+        website_record["website"] = website[0];
+        website_record["login"] = website[1];
+        website_record["password"] = Cryptor.xorCrypt(website[2], password);
+
+        foreach(u; memory_db["users"].array()) {
+            if (u["name"].str() == username) {
+                u["saves"].array() ~= website_record;
+                break;
+            }
+        }
+
+        this.writeDB();
     }
 
     /**
