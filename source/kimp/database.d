@@ -196,6 +196,38 @@ class DatabaseHelper {
         this.writeDB();
     }
 
+
+    /**
+     * Function for website's data getting
+     * Params:
+     *     username = Name for auth
+     *     password = Password for auth
+     *     website = Name of website for getting
+     * Throws:
+     *     DatabaseException if cannot find the website or auth the user
+     * Returns:
+     *     Array with website's data
+     */
+    public string [] getWebsite(immutable string username, immutable string password, immutable string website) @trusted {
+        enforce!DatabaseException(this.getWebsites(username, password).count(website) == 1, "The website doesn\'t exist");
+        string [] data = new string[3];
+
+        foreach(u; memory_db["users"].array()) {
+            if (u["name"].str() == username) {
+                foreach(e; u["saves"].array()) {
+                    if (e["website"].str == website) {
+                        data[0] = e["website"].str();
+                        data[1] = e["login"].str();
+                        data[2] = Cryptor.xorCrypt(e["password"].str(), password);
+                        break;
+                    }
+                } break;
+            }
+        }
+
+        return data;
+    }
+
     /**
      * Collect saved websites
      * Params:

@@ -4,6 +4,9 @@ module kimp.cli;
 // Import stdio and defines
 import std.stdio, std.string, std.conv, kimp.defines;
 
+// Import exceptions
+import std.exception, kimp.database : DatabaseException;
+
 /**
  * Class for work with CLI
  * Print hello and help messages, get data from keyboard
@@ -42,12 +45,18 @@ class Cli {
 
     /**
      * Print message with cat and information about saved password
+     * Params:
+     *     data = Array with the websites data
+     * Throws:
+     *     DatabaseException if data is incorrect
      */
-    public static void printSave(immutable string website, immutable string login, immutable string password) @safe {
-        writeln("\x1b[1m    ^~^  ,   Website : \x1b[0m", website);
+    public static void printSave(immutable string [] data) @safe {
+        enforce!DatabaseException(data.length == 3, "Incorrect website\'s data");
+        writeln("\x1b[1m    ^~^  ,   Website : \x1b[0m", data[0]);
         writeln("\x1b[1m   ('Y') )   \x1b[0m");
-        writeln("\x1b[1m   /   \\/    Login : \x1b[0m", login);
-        writeln("\x1b[1m  (\\|||/)    Password : \x1b[0m", password);
+        writeln("\x1b[1m   /   \\/    Login : \x1b[0m", data[1]);
+        writeln("\x1b[1m  (\\|||/)    Password : \x1b[0m", data[2]);
+        writeln("");
     }
 
     /**
@@ -104,20 +113,46 @@ class Cli {
                 user_input = user_input.replace("\r", "");
                 user_input = user_input.replace("\n", "");
 
+                writeln("");
+
                 immutable ulong choice = to!ulong(user_input);
-                if (choice > counter) {
-                    Cli.printError("Incorrect input\n");
+                if (choice > counter || choice == 0) {
+                    Cli.printError("Incorrect input");
                     continue;
                 }
 
-                if (choice <= websites.length) return websites[choice - 1];
                 if (choice == counter) return "";
-                else return "\n\n";
+                else if (choice == counter - 1) return "\n\n";
+                else return websites[choice - 1];
             } catch (Exception e) {
-                Cli.printError(e.msg ~ "\n");
+                Cli.printError(e.msg);
                 continue;
             }
         }
+    }
+
+
+    /**
+     * Get website's data from stdin
+     * Returns:
+     *     Array with website's data (name, login and password)
+     */
+    public static string [] inputWebsite() @trusted {
+        string [] website = new string[3];
+
+        write("Enter the website\'s name : ");
+        website[0] = readln();
+        write("Enter the website\'s login : ");
+        website[1] = readln();
+        write("Enter the website\'s password : ");
+        website[2] = readln();
+
+        for (ulong i = 0; i < 3; i++) {
+            website[i] = website[i].replace("\r", "");
+            website[i] = website[i].replace("\n", "");
+        }
+
+        return website;
     }
 }
 

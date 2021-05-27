@@ -118,7 +118,7 @@ int main(string [] args) {
 			Cli.printError(e.msg);
 			return -6;
 		}
-		Cli.printMessage("Access was granted!\n");
+		Cli.printMessage("Access was granted!");
 
 		while (true) {
 			try {
@@ -128,13 +128,14 @@ int main(string [] args) {
 					break;
 				}
 				else if (need == "\n\n") {
-
+					kitty_db.addWebsite(u, p, Cli.inputWebsite().idup);
+					Cli.printMessage("The password was saved!");
 				}
 				else {
-
+					Cli.printSave(kitty_db.getWebsite(u, p, need).idup);
 				}
 			} catch (Exception e) {
-
+				Cli.printError(e.msg);
 			}
 		}
 	}
