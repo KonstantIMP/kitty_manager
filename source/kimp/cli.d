@@ -2,7 +2,7 @@
 module kimp.cli;
 
 // Import stdio and defines
-import std.stdio, core.stdc.stdio, std.conv, kimp.defines;
+import std.stdio, std.string, std.conv, kimp.defines;
 
 /**
  * Class for work with CLI
@@ -79,5 +79,45 @@ class Cli {
      *     message = Message for displaing
      */
     public static void printMessage(immutable string message) @safe { writeln("\x1b[1;32mMessage : \x1b[0m", message); }
+
+    /**
+     * Get user's choice = to!ulong(user_input); (Show password, add password, exit)
+     * Params:
+     *     websites = Websites array for displaing
+     * Returns:
+     *     String with user's choice = to!ulong(user_input); ("" for exit and "\n\n" for user creating)
+     */
+    public static string getInput(immutable string [] websites) @trusted {
+        while (true) {
+            ulong counter = 0;
+            foreach(i; websites) {
+                writeln("\x1b[1m", counter + 1, ". \x1b[0m", i);
+                counter++;
+            }
+            writeln("\x1b[1m", counter + 1, ". \x1b[0m", "Add new password");
+            writeln("\x1b[1m", counter + 2, ". \x1b[0m", "Exit");
+            counter += 2;
+
+            try {
+                write("Make your choice : ");
+                string user_input = readln();
+                user_input = user_input.replace("\r", "");
+                user_input = user_input.replace("\n", "");
+
+                immutable ulong choice = to!ulong(user_input);
+                if (choice > counter) {
+                    Cli.printError("Incorrect input\n");
+                    continue;
+                }
+
+                if (choice <= websites.length) return websites[choice - 1];
+                if (choice == counter) return "";
+                else return "\n\n";
+            } catch (Exception e) {
+                Cli.printError(e.msg ~ "\n");
+                continue;
+            }
+        }
+    }
 }
 

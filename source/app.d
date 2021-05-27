@@ -118,7 +118,25 @@ int main(string [] args) {
 			Cli.printError(e.msg);
 			return -6;
 		}
-		Cli.printMessage("Access was granted!");
+		Cli.printMessage("Access was granted!\n");
+
+		while (true) {
+			try {
+				auto need = Cli.getInput(kitty_db.getWebsites(u, p).idup);
+				if (need == "") {
+					Cli.printMessage("Bye");
+					break;
+				}
+				else if (need == "\n\n") {
+
+				}
+				else {
+
+				}
+			} catch (Exception e) {
+
+			}
+		}
 	}
 
 	return 0;
